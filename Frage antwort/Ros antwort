@@ -1,0 +1,81 @@
+0 Welche Topics können Sie aus dem File empfangen?
+Answer - 
+rishi@rishi-VirtualBox:~/ros_ws$ ros2 topic list
+/clicked_point
+/clock
+/dolly/cmd_vel
+/dolly/laser_scan
+/dolly/odom
+/goal_pose
+/initialpose
+/parameter_events
+/rosout
+/tf
+/tf_static
+
+(optional - Topic Info - Type: sensor_msgs/msg/LaserScan
+Publisher count: 0
+Subscription count: 1)
+
+
+
+1 Zu welcher Bibliothek gehört diese Nachricht?
+- Die Bibliothek heisst sensor_msgs 
+
+2Welche Parameter sind in der Nachricht enthalten?
+
+- Ich habe gleich parameter geschreiben, wenn ich echo gemacht und bekommt.  Die Parameter is angle_min, angle_max, angle_increment, time_increment, scan_time, range_min und max , und range. 
+
+bei ros2 topic echo /dolly/laser_scan 
+ header:
+  stamp:
+    sec: 667
+    nanosec: 295000000
+  frame_id: chassis
+angle_min: -1.0
+angle_max: 1.0
+angle_increment: 0.01005025114864111
+time_increment: 0.0
+scan_time: 0.0
+range_min: 0.05000000074505806
+range_max: 10.0
+ranges:
+- 2.084624767303467
+...................
+
+
+3 Welche Bedeutung haben diese Parameter?
+- Die Bedeutung von diese Parameter sind -
+Header header         -    (# timestamp in the header is the acquisition time of the first ray in the scan.)                         
+float32 angle_min     -  Das Anfangswinkel des Scans   (# start angle of the scan [rad])
+float32 angle_max      -  Das Endwinkel des Scans (# end angle of the scan [rad])
+float32 angle_increment - Winkelabstand zwischen den Messungen (# angular distance between measurements [rad])
+float32 time_increment -  Zeit zwischen den Messungen (# time between measurements [seconds])
+float32 scan_time     -   Zeit zwischen das Scan (# time between scans [seconds])
+float32 range_min      -  minimaler Bereichswert (# minimum range value [m])
+float32 range_max      -  maximaler Bereichswert (# maximum range value [m])
+float32[] ranges        -Die Unterschiede zwischen dem niedrigsten und dem höchsten Wert  (# range data [m] (Note: values < range_min or > range_max should be discarded)
+
+4 Ordnen Sie die Parameter zu der Abbildung "Lasescanner Parameter"
+- Bitte sehen sie die Parameter Bedeutung file in rishi_object_counter/Frage antwort/ Parameter Bedeutung
+
+5 Denken Sie an einem Algorithmus zur Objekterkennung anhand der LIDAR-Messung. Beschreiben Sie das Algorithmus
+- Im Algorithmus erhalten wir 2 Arten von Daten in Bereichen. Eine ist unendlich und die andere hat einen bestimmten Wert (bitte data.txt lesen). Um ein Objekt zu erkennen, wählen wir nur einen Wert aus unserem Nachrichtenbereich mit einer festen Größe (Bereichsarray). 
+
+6 Interpret what you See 
+- Hier kann ich einige rote Kästchen sehen, vielleicht stellen sie ein Objekt dar, und in der Mitte befindet sich eine 3D-Achse, die auf die x-, y- und z-Dimension zeigt
+
+7 Paste topic tf 
+-rishi@rishi-VirtualBox:~/ros_ws$ ros2 topic info /tf
+Type: tf2_msgs/msg/TFMessage
+Publisher count: 1
+Subscription count: 1
+
+
+8 - Object counter Ros file git link - 
+code - 
+1 - colcon build
+2 - .install / setup.bash
+3- ros2 bag play -l src/bag_files_fixed/rosbag2_2021_05_09-18_39_42/
+4- ros2 run rishi_object_counter obj_dect
+	
